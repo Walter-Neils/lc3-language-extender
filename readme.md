@@ -190,3 +190,16 @@ __stack_impl_STACK2_temp_save_location .FILL x0
 .END
 ```
 You can see that the program has created two stacks based on the used names, and has correctly pushed and popped values from each stack.
+
+## Future Features
+* Support for more pseudo-instructions 
+  * Comparison: (LT, GT, LE, GE, etc.)
+  * Register label as trap vector (REGISTER_TRAP x0)
+* Support for sequential operation optimization
+  * Don't restore temp registers if they are immediately overwritten
+* Better diagnostics
+* Sub-step output
+  * Show the output of each step of the translation process
+* Detect invalid pseudo-instructions
+* Detect invalid pseudo-instruction arguments
+* Support multi-line pseudo-instructions (complex branching, etc.)
