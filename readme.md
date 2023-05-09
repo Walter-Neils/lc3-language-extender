@@ -195,11 +195,26 @@ You can see that the program has created two stacks based on the used names, and
 * Support for more pseudo-instructions 
   * Comparison: (LT, GT, LE, GE, etc.)
   * Register label as trap vector (REGISTER_TRAP x0)
+  * Stack ignore (drop values from the stack without storing them)
+  * Index-based stack removal (POP_STACK x0, #1)
+  * CALL, CALL_S
+    * CALL saves R7 to the stack, and then jumps to the specified label
+    * CALL_S saves all registers to the stack, and then jumps to the specified label
+    * Both instructions restore the registers they saved after executing the specified subroutine
 * Support for sequential operation optimization
   * Don't restore temp registers if they are immediately overwritten
+  * Forward look-ahead to determine if a register is immediately overwritten
 * Better diagnostics
 * Sub-step output
   * Show the output of each step of the translation process
 * Detect invalid pseudo-instructions
 * Detect invalid pseudo-instruction arguments
 * Support multi-line pseudo-instructions (complex branching, etc.)
+* LC3 exception handling
+  * Generic system to handle exceptions (stack overflow, divide by zero, etc.)
+* Configuration system to allow users to configure behaviour
+  * How large the stack is
+  * How aggressive string optimization is
+  * Whether to use the stack or registers for temp storage
+  * Optimization level (none, some, all)(?)
+  * Macro support
