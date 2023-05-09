@@ -77,7 +77,6 @@ int main()
 
     for (int i = 0;; i++) {
         bool modified = false;
-
         for (auto pseudoOpCode: pseudoOpCodes) {
             for (int j = 0; j < content.size(); j++) {
                 if (pseudoOpCode->canHandle(content[j])) {
@@ -89,10 +88,16 @@ int main()
                 }
             }
         }
-
         if (!modified) {
             break;
         }
+
+        NON_RESULT_OUT << "; Processing iteration " << i << "\n";
+        for(auto& line : content)
+        {
+            NON_RESULT_OUT << line << "\n";
+        }
+        NON_RESULT_OUT << "; End processing iteration " << i << "\n";
 
         if (i > MAXIMUM_ITERATIONS) {
             throw std::runtime_error("Maximum iterations exceeded.");

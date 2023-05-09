@@ -33,6 +33,30 @@ public:
     [[nodiscard]] virtual std::vector<std::string> handleToken(const std::string& token) = 0;
 };
 ```
+Internal usage: 
+```c++
+for (int i = 0;; i++) {
+        bool modified = false;
+        for (auto pseudoOpCode: pseudoOpCodes) {
+            for (int j = 0; j < content.size(); j++) {
+                if (pseudoOpCode->canHandle(content[j])) {
+                    auto result = pseudoOpCode->handleToken(content[j]);
+                    content.erase(content.begin() + j);
+                    content.insert(content.begin() + j, result.begin(), result.end());
+                    modified = true;
+                    break;
+                }
+            }
+        }
+        if (!modified) {
+            break;
+        }
+        if (i > MAXIMUM_ITERATIONS) {
+            throw std::runtime_error("Maximum iterations exceeded.");
+        }
+    }
+```
+
 ## Internal Operation Details
 ### PseudoOpCode function calls
 - The program will iterate through all PseudoOpCodes, and call canHandle() on each one.
