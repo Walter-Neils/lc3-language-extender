@@ -72,6 +72,13 @@ int main()
                 i--;
             }
         }
+
+        // Remove leading and trailing whitespace
+        for (int i = 0; i < content.size(); i++) {
+            auto& line = content[i];
+            line = line.substr(line.find_first_not_of(' '));
+            line = line.substr(0, line.find_last_not_of(' ') + 1);
+        }
     }
 
 
@@ -80,24 +87,17 @@ int main()
         for (auto pseudoOpCode: pseudoOpCodes) {
             for (int j = 0; j < content.size(); j++) {
                 if (pseudoOpCode->canHandle(content[j])) {
+                    NON_RESULT_OUT << "PseudoOpCode " << pseudoOpCode->getName() << " handling token " << content[j] << "\n";
                     auto result = pseudoOpCode->handleToken(content[j]);
                     content.erase(content.begin() + j);
                     content.insert(content.begin() + j, result.begin(), result.end());
                     modified = true;
-                    break;
                 }
             }
         }
         if (!modified) {
             break;
         }
-
-        NON_RESULT_OUT << "; Processing iteration " << i << "\n";
-        for(auto& line : content)
-        {
-            NON_RESULT_OUT << line << "\n";
-        }
-        NON_RESULT_OUT << "; End processing iteration " << i << "\n";
 
         if (i > MAXIMUM_ITERATIONS) {
             throw std::runtime_error("Maximum iterations exceeded.");

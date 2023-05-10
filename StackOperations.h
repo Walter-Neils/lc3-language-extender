@@ -26,7 +26,7 @@ private:
     std::vector<std::string> handlePushOperation(const std::string& stackName, int targetRegister)
     {
         auto [stackPointer, temporarySaveLocation, _] = getStackComponents(stackName);
-        int  tempRegister                             = targetRegister + 1 % 7;
+        int  tempRegister                             = (targetRegister + 1) % 7;
         // ST ${tempRegister}, ${temporarySaveLocation}
         // LD ${tempRegister}, ${stackPointer}
         // ADD ${tempRegister}, ${tempRegister}, #1
@@ -47,7 +47,7 @@ private:
     std::vector<std::string> handlePopOperation(const std::string& stackName, int targetRegister)
     {
         auto [stackPointer, temporarySaveLocation, _] = getStackComponents(stackName);
-        int  tempRegister                             = targetRegister + 1 % 7;
+        int  tempRegister                             = (targetRegister + 1) % 7;
         // ST ${tempRegister}, ${temporarySaveLocation}
         // LD ${tempRegister}, ${stackPointer}
         // ADD ${tempRegister}, ${tempRegister}, #-1
@@ -68,7 +68,7 @@ private:
     std::vector<std::string> handlePeekOperation(const std::string& stackName, int targetRegister)
     {
         auto [stackPointer, temporarySaveLocation, _] = getStackComponents(stackName);
-        int  tempRegister                             = targetRegister + 1 % 7;
+        int  tempRegister                             = (targetRegister + 1) % 7;
         // ST ${tempRegister}, ${temporarySaveLocation}
         // LD ${tempRegister}, ${stackPointer}
         // LDI ${targetRegister}, ${stackPointer}
@@ -107,7 +107,7 @@ public:
             // ${stackPointer} .FILL x0
             // ${temporarySaveLocation} .FILL x0
 
-            result.push_back(stackBlockName + " .BLKW 32");
+            result.push_back(stackBlockName + " .BLKW #32");
             result.push_back(stackPointer + " .FILL x0");
             result.push_back(temporarySaveLocation + " .FILL x0");
         }

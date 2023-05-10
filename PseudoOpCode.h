@@ -13,7 +13,7 @@ class PseudoOpCode
 public:
     [[nodiscard]] virtual std::string getName()
     {
-        return "UNKNOWN";
+        return typeid(*this).name();
     }
 
     /// @brief Produces initialization logic to be inserted at the beginning of the program.
